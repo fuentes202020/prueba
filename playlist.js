@@ -1,20 +1,17 @@
+
+<script type="text/javascript">
 var video_player = document.getElementById("video_player");
-var video = video_player.getElementsByTagName("video")[0],
+video = video_player.getElementsByTagName("video")[0],
 video_links = video_player.getElementsByTagName("figcaption")[0],
 source = video.getElementsByTagName("source"),
 link_list = [],
-// You will use path= <--- to set the correct path to your videos here
 path = '',
 currentVid = 0,
-// allLnks holds all info on referenced vids in figcaption
 allLnks = video_links.children,
 lnkNum = allLnks.length;
 video.removeAttribute("controls");
 video.removeAttribute("poster");
 
-// in this script, I went through and corrected playVid and classList references
-// starting with I removed :
-/* (function() { <-- as this didn't really seem to serve a purpose
 function playVid(index) {
 video_links.children[index].classList.add("currentvid");
 source[0].src = path + link_list[index] + ".mp4";
@@ -24,3 +21,19 @@ currentVid = index;
 video.load();
 video.play();
 }
+for (var i=0; i<lnknum; i++)="" {="" var="" filename="allLnks[i].href;" link_list[i]="filename.match(/([^\/]+)(?=\.\w+$)/)[0];" (function(index){="" alllnks[i].onclick="function(i){" i.preventdefault();="" for="" (var="" i="0;" i<lnknum;="" i++)="" {="" alllnks[i].classlist.remove("currentvid");="" }="" playvid(index);="" }="" })(i);="" }="" video.addeventlistener('ended',="" function="" ()="" {="" alllnks[currentvid].classlist.remove("currentvid");="" if="" ((currentvid="" +="" 1)="">= lnkNum) {
+nextVid = 0;
+} else {
+nextVid = currentVid+1;
+}
+playVid(nextVid);
+})
+
+video.addEventListener('mouseenter',
+function() {
+video.setAttribute("controls","true");
+})
+video.addEventListener('mouseleave', function() {
+video.removeAttribute("controls");
+})
+</script>
