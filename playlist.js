@@ -24,24 +24,3 @@ currentVid = index;
 video.load();
 video.play();
 }
-// this allows the player to move to the next vid and causes highlight to change when video changes
-video.addEventListener('ended', function () {
-allLnks[currentVid].classList.remove("currentvid");
-if ((currentVid + 1)>= lnkNum) {
-nextVid = 0;
-} else {
-nextVid = currentVid+1;
-}
-playVid(nextVid);
-// this is new, per developer tools added , {passive: true} to pass checks
-}, {passive: true})
-
-// this part allows the vid controls to appear on mouse hover and hides them when mouse leaves area
-
-video.addEventListener('mouseenter',
-function() {
-video.setAttribute("controls","true");
-})
-video.addEventListener('mouseleave', function() {
-video.removeAttribute("controls");
-})
