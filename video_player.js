@@ -1,33 +1,40 @@
 var video_player = document.getElementById("video_player");
-video = video_player.getElementsByTagName("video")[0],
-video_links = video_player.getElementsByTagName("figcaption")[0],
-source = video.getElementsByTagName("source"),
-link_list = [],
-path = '',
-currentVid = 0,
-allLnks = video_links.children,
-lnkNum = allLnks.length;
-video.removeAttribute("controls");
-video.removeAttribute("poster");
-(function() {
-	function playVid(index) {
-		video_links.children[index].classList.add("currentvid");
-		source[0].src = path + link_list[index] + ".mp4";
-		source[1].src = path + link_list[index] + ".webm";   
-		currentVid = index;
-		video.load();
-		video.play();
-	}
-	for (var i=0; i<lnkNum; i++) {
-		var filename = allLnks[i].href;
-		link_list[i] = filename.match(/([^\/]+)(?=\.\w+$)/)[0];
-			(function(index){
-				allLnks[i].onclick = function(i){
-					i.preventDefault();
-						for (var i=0; i<lnkNum; i++) {
-							allLnks[i].classList.remove("currentvid");
-						}
-					playVid(index);
-				}
-		})(i);
+if (video_player != null) {
+  links = video_player.getElementsByTagName('a');
+  for (var i = 0; i < links.length; i++) {
+    links[i].onclick = handler;
+  }
 }
+
+function handler(e) {
+  e.preventDefault();
+  videotarget = this.getAttribute("href");
+  video = document.querySelector("#video_player video");
+  video.removeAttribute("controls");
+  video.removeAttribute("poster");
+  source = document.querySelectorAll("#video_player video source");
+  source[0].src = videotarget;
+  video.setAttribute("controls", "true");
+  
+  video.onloadedmetadata = function() {
+    var el = $(document.getElementById("video_player"));
+    var elOffset = el.offset().top;
+    var elHeight = el.height();
+    var windowHeight = $(window).height();
+    var offset;
+
+    if (elHeight < windowHeight) {
+      offset = elOffset - ((windowHeight / 2) - (elHeight / 2));
+    } else {
+      offset = elOffset;
+    }
+    var speed = 700;
+    $('html, body').animate({
+      scrollTop: offset
+    }, speed);
+  }
+
+  video.load();
+  video.play();
+}
+
